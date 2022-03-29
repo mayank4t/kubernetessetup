@@ -1,0 +1,2 @@
+# Creation of Master node
+gcloud compute instances create master2 --project=kubernetestestmayank --image=centos-7 --machine-type=e2-medium --zone=asia-south2-a
