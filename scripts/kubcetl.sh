@@ -14,12 +14,12 @@ then
                 read version ;
                 #append v in fron of version if not added ;
                 echo $version | grep -v "v" && version=v$version ; 
-                # Donwload kubectl exectuable ;
+                # Download kubectl exectuable ;
                 curl -LO "https://dl.k8s.io/release/$version/bin/linux/amd64/kubectl" ;
                 # Download kubectl checksum ;
                 curl -LO "https://dl.k8s.io/$version/bin/linux/amd64/kubectl.sha256" ;
         else
-                echo "Donwloadng latest of the kubectl" ;
+                echo "Downloadng latest of the kubectl" ;
                 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" ;
                 curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" ;
         fi
