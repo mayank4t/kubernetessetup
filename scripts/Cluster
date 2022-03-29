@@ -39,7 +39,8 @@ yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
 #start and enable cluster
 systemctl enable --now kubelet
 kubeadm init --apiserver-advertise-address=10.190.0.7 --pod-network-cidr=192.168.0.0/16
-
+# Calio solution is used for the pod network
+kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 # -apiserver-advertise-address is arg for master node IP address where as pod-network-cidr defines pod network range
 
 #to check if context is setup 
