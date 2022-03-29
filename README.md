@@ -1,3 +1,3 @@
-# kubernetestestmayank
+# kubernetes
 
-This repo is used for bash script of kubernets configuration
+kubernetes handson
