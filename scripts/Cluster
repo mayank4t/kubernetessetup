@@ -1,35 +1,43 @@
-lsmod | grep br_netfilter && echo "br_netfilter configured" || sudo modprobe br_netfilter 
-# create k8s.conf
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-br_netfilter
-EOF
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+#Disbale and stop Filrewall service
+systemctl disable firewalld; systemctl stop firewalld
+
+#Disbale and swap
+swapoff -a; sed -i '/swap/d' /etc/fstab
+
+#Disable selinux
+setenforce 0
+sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
+
+#Update networking using sysctl settings for Kubernetes 
+cat >>/etc/sysctl.d/kubernetes.conf<<EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
-sudo sysctl --system
-sudo apt-get update 
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
-sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-<<Create below File ---------------------->
-# kubeadm-config.yaml
-kind: ClusterConfiguration
-apiVersion: kubeadm.k8s.io/v1beta3
-kubernetesVersion: v1.21.0 -- check version number>
----
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-cgroupDriver: systemd
-    
+sysctl --system
 
-sudo systemctl start kubelet kubectl
-kubeadm init
+#install docker and dependencies 
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce-19.03.12 
+systemctl enable docker
+
+#install repo for kubernetes 
+cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+
+#install Kubernetes
+yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
+
+#start and enable cluster
+systemctl enable --now kubelet
+kubeadm init --apiserver-advertise-address=10.190.0.7 --pod-network-cidr=192.168.0.0/16
+
+# -apiserver-advertise-address is arg for master node IP address where as pod-network-cidr defines pod network range
