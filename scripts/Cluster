@@ -41,3 +41,19 @@ systemctl enable --now kubelet
 kubeadm init --apiserver-advertise-address=10.190.0.7 --pod-network-cidr=192.168.0.0/16
 
 # -apiserver-advertise-address is arg for master node IP address where as pod-network-cidr defines pod network range
+
+#to check if context is setup 
+[root@master ~]# kubectl config view
+                  apiVersion: v1
+                  clusters: null
+                  contexts: null
+                  current-context: ""
+                  kind: Config
+                  preferences: {}
+                  users: null
+#Some times context is not setup properly 
+sudo sudo cp /etc/kubernetes/admin.conf .
+sudo chown mayank_geit89:mayank_geit89 admin.conf
+export KUBECONFIG=$HOME/admin.conf
+#after setting up
+kubectl config view will work properly
