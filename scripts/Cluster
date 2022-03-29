@@ -19,7 +19,7 @@ sysctl --system
 yum install -y yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 yum install -y docker-ce-19.03.12 
-systemctl enable docker
+systemctl enable --now docker
 
 #install repo for kubernetes 
 cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
@@ -36,12 +36,21 @@ EOF
 #install Kubernetes
 yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
 
-#start and enable cluster
+#start and enable kubelet
 systemctl enable --now kubelet
+
+#join node with token command generated via kubeadm token create --print-join-command in master ndoe
+
+
+#master node commands :-
+
 kubeadm init --apiserver-advertise-address=10.190.0.7 --pod-network-cidr=192.168.0.0/16
 # Calio solution is used for the pod network
 kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 # -apiserver-advertise-address is arg for master node IP address where as pod-network-cidr defines pod network range
+
+# to check connection command for nodes
+kubeadm token create --print-join-command
 
 #to check if context is setup 
 [root@master ~]# kubectl config view
