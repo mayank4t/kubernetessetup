@@ -24,4 +24,4 @@ https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
 systemctl enable --now kubelet
-gcloud compute instances add-tags node02 --tags=TAG --project=kubernetestestmayank --zone=asia-south2-a
+echo "Script execution completed"
