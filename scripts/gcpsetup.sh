@@ -13,9 +13,9 @@ then
         gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "kubeadm token create --print-join-command" ;
         if [ $? -eq 0 ];
         then
-                echo "There are some issue with the Master node, Please check" ;
+               echo "Master Node configuration is completed" ;              
         else
-                echo "Master Node configuration is completed" ;
+                echo "There are some issue with the Master node, Please check" ;
         fi
 fi
 echo "How many worker node you want to setup enter number:-"
