@@ -7,7 +7,7 @@ then
         flag1=2
         while [ ! $flag1 -eq 0 ]
         do
-                gcloud compute --project=kubernetestestmayank instances get-serial-port-output node02 --zone=asia-south2-a --port=1 | grep "------------Worker Node configured -------"
+                gcloud compute --project=kubernetestestmayank instances get-serial-port-output master --zone=asia-south2-a --port=1 | grep "------------Master Node configured -------"
                 flag1="$?"
         done
         gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "kubeadm token create --print-join-command" ;
