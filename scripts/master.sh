@@ -29,3 +29,5 @@ kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectca
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+echo "Script execution completed"
+echo "------------Master Node configured ------- "
