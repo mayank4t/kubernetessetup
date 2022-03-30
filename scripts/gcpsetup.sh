@@ -22,7 +22,7 @@ then
                 echo "There are some issue with the Master node, Please check" ;
         fi
 fi
-for ((i = 1 ; i <=$numberofvm ; i++));
+for ((i=1 ; i <=$numberofvm ; i++));
 do
         instance=node$i
         echo "creation of $instance begain"
@@ -30,7 +30,7 @@ do
         gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         while [ $? -ne 0 ];
         do
-                echo "working on master...";
+                echo "working on worker...";
                 sleep 2 ;
                 gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         done
@@ -38,6 +38,5 @@ do
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a ;
         gcloud compute ssh --zone "asia-south2-a" "$instance"  --project "sudo kubernetestestmayank" --command "/tmp/mastertoken.sh" ;
         echo "worker node created"
-        i=$i++ ;
 done
 echo "All Worker node setup complete check using kubectl on master" ;
