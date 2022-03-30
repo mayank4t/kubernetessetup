@@ -25,4 +25,4 @@ EOF
 yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
 systemctl enable --now kubelet
 echo "Script execution completed"
-echo "Mayank"
+echo "------------Worker Node configured ------- "
