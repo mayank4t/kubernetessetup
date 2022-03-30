@@ -24,7 +24,3 @@ https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
 systemctl enable --now kubelet
-gcloud compute scp --recurse master:/tmp/mastertoken.sh mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a
-chmod +x /tmp/mastertoken.sh
-gcloud compute scp --recurse ./mastertoken.sh node04:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a
-/tmp/mastertoken.sh
