@@ -1,5 +1,7 @@
 echo "This script will setup a master node as well"
 echo "If already configured it will skip master node configuration"
+echo "How many worker node you want to setup enter number:-"
+read numberofvm ;
 gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "kubeadm token create --print-join-command" ;
 if [ $? -ne 0 ];
 then
@@ -18,8 +20,6 @@ then
                 echo "There are some issue with the Master node, Please check" ;
         fi
 fi
-echo "How many worker node you want to setup enter number:-"
-read numberofvm ;
 for (( i = 0; i <= $numberofvm; i++ ))
 do
         instance=node$numberofvm
