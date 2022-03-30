@@ -1,2 +1,0 @@
-# Creation of Worker node with kubectl configuration
-gcloud compute instances create master1   --project=kubernetestestmayank   --image=centos-7   --machine-type=e2-micro   --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetes/master/scripts/kubcetl.sh
