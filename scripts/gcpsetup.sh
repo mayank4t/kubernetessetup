@@ -10,9 +10,9 @@ then
         gcloud compute --project=kubernetestestmayank instances get-serial-port-output master --zone=asia-south2-a --port=1 | grep -e "------------Master Node configured -------"
         while [ $? -ne 0 ];
         do
-                gcloud compute --project=kubernetestestmayank instances get-serial-port-output master --zone=asia-south2-a --port=1 | grep -e  "------------Master Node configured -------"
                 echo "working on master...";
                 sleep 2 ;
+                gcloud compute --project=kubernetestestmayank instances get-serial-port-output master --zone=asia-south2-a --port=1 | grep -e  "------------Master Node configured -------"
         done
         gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "sudo kubeadm token create --print-join-command" ;
         if [ $? -eq 0 ];
@@ -22,8 +22,7 @@ then
                 echo "There are some issue with the Master node, Please check" ;
         fi
 fi
-i=1
-for $i in $numberofvm
+for ((i = 1 ; i <=$numberofvm ; i++));
 do
         instance=node$i
         echo "creation of $instance begain"
@@ -31,14 +30,14 @@ do
         gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         while [ $? -ne 0 ];
         do
-                 gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
-                echo "working on worker...";
+                echo "working on master...";
                 sleep 2 ;
+                gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         done
         gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "sudo kubeadm token create --print-join-command" >> mastertoken.sh
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a ;
         gcloud compute ssh --zone "asia-south2-a" "$instance"  --project "sudo kubernetestestmayank" --command "/tmp/mastertoken.sh" ;
         echo "worker node created"
-        i=$i+1
+        i=$i++ ;
 done
 echo "All Worker node setup complete check using kubectl on master" ;
