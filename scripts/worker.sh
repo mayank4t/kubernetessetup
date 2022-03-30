@@ -1,3 +1,4 @@
+sudo -s
 systemctl disable firewalld; systemctl stop firewalld
 swapoff -a; sed -i '/swap/d' /etc/fstab
 setenforce 0
