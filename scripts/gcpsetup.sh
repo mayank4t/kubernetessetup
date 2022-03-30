@@ -33,7 +33,7 @@ function workernode
         flag2=2
         while [ ! $flag2 -eq 0 ]
         do
-                gcloud compute --project=kubernetestestmayank instances get-serial-port-output node02 --zone=asia-south2-a --port=1 | grep "------------Worker Node configured -------"
+                gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep "------------Worker Node configured -------"
                 flag2="$?"
         done
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a ;
