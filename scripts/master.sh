@@ -29,4 +29,3 @@ kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectca
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-kkubeadm token create --print-join-command | grep join >> /tmp/mastertoken.sh
