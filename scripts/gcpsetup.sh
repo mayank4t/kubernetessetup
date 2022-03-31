@@ -37,6 +37,7 @@ do
         gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "sudo kubeadm token create --print-join-command" >> mastertoken.sh
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a ;
         gcloud compute ssh --zone "asia-south2-a" "$instance"  --project "sudo kubernetestestmayank" --command "/tmp/mastertoken.sh" ;
+        rm -rf mastertoken.sh
         echo "worker node created"
 done
 echo "All Worker node setup complete check using kubectl on master" ;
