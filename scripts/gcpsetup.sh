@@ -6,7 +6,7 @@ read numberofvm ;
 gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "sudo kubeadm token create --print-join-command" > /dev/null;
 if [ $? -ne 0 ];
 then
-        gcloud compute instances create master --project=kubernetestestmayank --image=centos-7 --machine-type=e2-medium --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetes/master/scripts/master.sh
+        gcloud compute instances create master --project=kubernetestestmayank --image=centos-7 --machine-type=e2-medium --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetessetup/master/scripts/master.sh
         gcloud compute --project=kubernetestestmayank instances get-serial-port-output master --zone=asia-south2-a --port=1 | grep -e "------------Master Node configured -------"
         while [ $? -ne 0 ];
         do
@@ -26,7 +26,7 @@ for ((i=1 ; i <=$numberofvm ; i++));
 do
         instance=node$i
         echo "creation of $instance begain"
-        gcloud compute instances create $instance --project=kubernetestestmayank --image=centos-7 --machine-type=e2-micro --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetes/master/scripts/worker.sh
+        gcloud compute instances create $instance --project=kubernetestestmayank --image=centos-7 --machine-type=e2-micro --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetessetup/master/scripts/worker.sh
         gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         while [ $? -ne 0 ];
         do
