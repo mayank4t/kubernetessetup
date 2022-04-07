@@ -1,4 +1,13 @@
 #!/bin/bash
+
+#---------------------------------------------------------------------------------------------#
+# This script is used for the configuration of master and worker node
+# Script will check for hostname as master 
+# If configured it will check for token from master 
+# If not configured it will start creating master node
+# It will also create worker node and those node can be visible at master using kuberctl get node
+#---------------------------------------------------------------------------------------------#
+
 echo "This script will setup a master node as well"
 echo "If already configured it will skip master node configuration"
 echo "How many worker node you want to setup enter number:-"
