@@ -1,6 +1,6 @@
 #!/bin/bash
 #---------------------------------------------------------------------------------------------#
-# This script is used for the configuration of kubectl 
+# This script is used for the configuration of kubectl configuration only
 #---------------------------------------------------------------------------------------------#
 #Check if kubectl is already configured
 if ! command -v kubectl &> /dev/null
@@ -12,24 +12,24 @@ then
         then
                 echo "Please provide version number" ;
                 read version ;
-                #append v in fron of version if not added ;
+                #append v in front of version if not added ;
                 echo $version | grep -v "v" && version=v$version ; 
-                # Donwload kubectl exectuable ;
+                # Download kubectl executable ;
                 curl -LO "https://dl.k8s.io/release/$version/bin/linux/amd64/kubectl" ;
                 # Download kubectl checksum ;
                 curl -LO "https://dl.k8s.io/$version/bin/linux/amd64/kubectl.sha256" ;
         else
-                echo "Donwloadng latest of the kubectl" ;
+                echo "Downloading latest version of the kubectl" ;
                 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" ;
                 curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" ;
         fi
-        # Chekcsum match
+        # Checksum match
         echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check | grep "OK" > /dev/null ;
         if [ $? -eq 0 ] ;
         then 
                 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
         else 
-                echo "Kindly confirm version from https://kubernetes.io/releases/ or check connectivity" ;
+                echo "Confirm version from https://kubernetes.io/releases/ or check connectivity" ;
         fi
 else
         echo "Kubectl is already configured"
