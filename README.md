@@ -1,6 +1,6 @@
 # kubernetes setup
 
-kubernetes setup,
+
 This repo is created for the kuernetes setup in the GCP platform.
 Use ./gcpsetup.sh to spin up the cluster, It will also create the master node along with the number of nodes on the basis of user input. 
 
