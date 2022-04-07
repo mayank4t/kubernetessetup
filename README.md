@@ -11,3 +11,9 @@ Worker node :- hostname (node1, node2, node3… noden)  Project name, image type
 To use this :-
 
 Update gcpsetup.sh for above mentioned values.
+
+Versions :- 
+
+# Versions kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
+
+ 
