@@ -1,5 +1,6 @@
-#Disbale and stop Filrewall service
-systemctl disable firewalld; systemctl stop firewalld
+#Disbale and stop Firewall service
+systemctl disable firewalld; 
+systemctl stop firewalld
 
 #Disbale and swap
 swapoff -a; sed -i '/swap/d' /etc/fstab
