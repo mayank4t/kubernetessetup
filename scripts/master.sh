@@ -1,3 +1,12 @@
+#!/bin/bash
+
+#---------------------------------------------------------------------------------------------#
+# This script is used for the configuration of master node
+# Script will install docker, kubeadm, kubecli for hostname as master 
+# Versions kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
+# No checks applied
+#---------------------------------------------------------------------------------------------#
+
 systemctl disable firewalld; systemctl stop firewalld
 swapoff -a; sed -i '/swap/d' /etc/fstab
 setenforce 0
