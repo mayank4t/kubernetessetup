@@ -28,6 +28,7 @@ then
         if [ $? -eq 0 ] ;
         then 
                 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+                echo "Kubcetl installed"
         else 
                 echo "Confirm version from https://kubernetes.io/releases/ or check connectivity" ;
         fi
