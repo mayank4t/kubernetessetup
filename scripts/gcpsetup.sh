@@ -58,7 +58,7 @@ do
 	# copy token to Newley created worker node
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=kubernetestestmayank --zone=asia-south2-a ;
 	# Join as a node using token
-        gcloud compute ssh --zone "asia-south2-a" "$instance"  --project "kubernetestestmayank" --command "sudo /tmp/mastertoken.sh" ;
+        gcloud compute ssh --zone "asia-south2-a" "$instance"  --project "kubernetestestmayank" --command "sudo sh /tmp/mastertoken.sh" ;
         rm -rf mastertoken.sh
         echo "worker node created"
 done
