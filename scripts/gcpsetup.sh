@@ -12,6 +12,14 @@ echo "This script will setup a master node as well"
 echo "If already configured it will skip master node configuration"
 echo "How many worker node you want to setup enter number:-"
 read numberofvm ;
+echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
+read workernodetype ;
+
+while [[ "$workernodetype" != "e2-small" && "$workernodetype" != "e2-micro" ]]
+do
+        echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
+        read workernodetype ;
+done
 
 # Check for master node with hostname :- master is configured or not 
 gcloud compute ssh --zone "asia-south2-a" "master"  --project "kubernetestestmayank" --command "sudo kubeadm token create --print-join-command" > /dev/null;
@@ -42,9 +50,9 @@ fi
 for ((i=1 ; i <=$numberofvm ; i++));
 do
         instance=node$i
-        echo "creation of $instance begain"
+        echo "creation of instance $instance with resource type as $workernodetype begain"
         # creation of worker node
-	gcloud compute instances create $instance --project=kubernetestestmayank --image=centos-7 --machine-type=e2-micro --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetessetup/master/scripts/worker.sh
+	gcloud compute instances create $instance --project=kubernetestestmayank --image=centos-7 --machine-type=$workernodetype --zone=asia-south2-a --metadata=startup-script-url=https://raw.githubusercontent.com/mayank4t/kubernetessetup/master/scripts/worker.sh
         # Waiting for Completion of worker node configuration
 	gcloud compute --project=kubernetestestmayank instances get-serial-port-output $instance --zone=asia-south2-a --port=1 | grep -e "------------Worker Node configured -------"
         while [ $? -ne 0 ];
