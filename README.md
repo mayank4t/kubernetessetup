@@ -9,10 +9,8 @@ Below values are hardcoded
 Master node:- hostname, Project name, image type, machine size, and zone  
 Worker node :- hostname (node1, node2, node3… noden)  Project name, image type, machine size, and zone  
 
-To use this:-
-
-Update gcpsetup.sh by changing the Project name, machine size, zone, and hostname as per their requirement. 
-
 Versions:- 
 
 # Versions kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
+
+This script will also setup grafana and prometheus monitoring based on the user's input
