@@ -23,7 +23,7 @@ do
         echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
         read workernodetype ;
 done
-while [[ "$input" != "y" && "$input != "n" ]]
+while [[ "$input" != "y" && "$input" != "n" ]]
 do
         echo "Enter y for Yes and n for No" ;
         read input;
