@@ -23,7 +23,6 @@ do
         echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
         read workernodetype ;
 done
-zone=$zone;
 project=kubernetestestmayank;
 zone=asia-south2-a;
 masternodetype=e2-medium;
