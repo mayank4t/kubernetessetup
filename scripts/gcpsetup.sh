@@ -14,7 +14,7 @@ echo "How many worker node you want to setup enter number:-"
 read numberofvm ;
 echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
 read workernodetype ;
-read -r -p "Do you want to setup grafana and Prometheus for your cluster? [Y/n] " input
+read -r -p "Do you want to setup grafana and Prometheus for your cluster? [y/n] " input
 
 # -------------------------------Hardcoaded values----------------------------------#
 # Setting up worker node type to e2-small or e2-micro
@@ -22,6 +22,11 @@ while [[ "$workernodetype" != "e2-small" && "$workernodetype" != "e2-micro" ]]
 do
         echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
         read workernodetype ;
+done
+while [[ "$input" != "y" && "$input != "n" ]]
+do
+        echo "Enter y for Yes and n for No" ;
+        read input;
 done
 project=kubernetestestmayank;
 zone=asia-south2-a;
@@ -85,7 +90,7 @@ done
 #---------------------------------------------------------------#
 
 #--------------------------------- Monitoring Configuration -----------------------------------------#
-if [ $input -eq [yY][eE][sS]|[yY] ];
+if [ $input -eq "y" ];
 then
 	wget "https://raw.githubusercontent.com/mayank4t/prometheus-grafanaK8setup/main/master.sh"
 	gcloud compute scp --recurse ./mastertoken.sh $hostnamemaster:/tmp/master.sh --project=$project --zone=$zone;
@@ -105,4 +110,3 @@ else
 	echo "All Worker node setup complete without monitoring, check using kubectl on master" ;
 fi
 #----------------------------------------------------------------------------------------------------------#
-
