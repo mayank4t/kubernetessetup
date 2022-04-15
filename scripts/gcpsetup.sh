@@ -97,8 +97,8 @@ if [ $input = "y" ];
 then
 	wget "https://raw.githubusercontent.com/mayank4t/prometheus-grafanaK8setup/main/master.sh"
 	gcloud compute scp --recurse ./master.sh $hostnamemaster:/tmp/master.sh --project=$project --zone=$zone;
-	gcloud compute ssh --zone $zone $hostnamemaster --project $project --command "sudo sh /tmp/master.sh" ;
 	gcloud compute ssh --zone $zone $hostnamemaster --project $project --command "echo $password >> /tmp/password" ;
+	gcloud compute ssh --zone $zone $hostnamemaster --project $project --command "sudo sh /tmp/master.sh" ;
 	echo "Master node configured"
 	for ((i=1 ; i <=$numberofvm ; i++));
 	do
