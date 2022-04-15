@@ -104,7 +104,6 @@ then
 	do
 		instance=node$i
 		gcloud compute ssh --zone $zone "$instance"  --project $project --command "sudo yum install nfs-utils -y"
-		gcloud compute ssh --zone $zone "$instance"  --project $project --command "sudo mkdir /data"
 		gcloud compute ssh --zone $zone "$instance"  --project $project --command "sudo mount -t nfs  master:/data /data"
 
 	done
