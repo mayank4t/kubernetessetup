@@ -15,7 +15,10 @@ read numberofvm ;
 echo "Please share Node Type for worker node, supported are:- e2-micro , e2-small" ;
 read workernodetype ;
 read -r -p "Do you want to setup grafana and Prometheus for your cluster? [y/n] " input
-
+if [ $input = "y" ];
+then
+	read -r -p "Please enter grafana admin user password" password
+fi
 # -------------------------------Hardcoaded values----------------------------------#
 # Setting up worker node type to e2-small or e2-micro
 while [[ "$workernodetype" != "e2-small" && "$workernodetype" != "e2-micro" ]]
@@ -95,6 +98,7 @@ then
 	wget "https://raw.githubusercontent.com/mayank4t/prometheus-grafanaK8setup/main/master.sh"
 	gcloud compute scp --recurse ./master.sh $hostnamemaster:/tmp/master.sh --project=$project --zone=$zone;
 	gcloud compute ssh --zone $zone $hostnamemaster --project $project --command "sudo sh /tmp/master.sh" ;
+	gcloud compute ssh --zone $zone $hostnamemaster --project $project --command "echo $password >> /tmp/password" ;
 	echo "Master node configured"
 	for ((i=1 ; i <=$numberofvm ; i++));
 	do
