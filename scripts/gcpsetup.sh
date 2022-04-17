@@ -82,7 +82,7 @@ do
                 gcloud compute --project=$project instances get-serial-port-output $instance --zone=$zone --port=1 | grep -e "------------Worker Node configured -------"
         done
 	# get join command for worker node from master node	
-        gcloud compute ssh --zone $zone "master"  --project $project --command "sudo kubeadm token create --print-join-command" >> mastertoken.sh
+        gcloud compute ssh --zone $zone $hostnamemaster  --project $project --command "sudo kubeadm token create --print-join-command" >> mastertoken.sh
 	# copy token to Newley created worker node
         gcloud compute scp --recurse ./mastertoken.sh $instance:/tmp/mastertoken.sh --project=$project --zone=$zone ;
 	# Join as a node using token
